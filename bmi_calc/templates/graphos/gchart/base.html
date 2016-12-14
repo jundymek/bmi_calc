@@ -17,4 +17,8 @@
     chart.draw(data, options);
     chart{{ chart.get_html_id }} = chart;
   }
+
+  $(window).resize(function (){
+    drawChart{{ chart.get_html_id }}();
+  });
 </script>
