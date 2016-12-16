@@ -30,7 +30,7 @@ class BmiCalculator():
         elif self.bmi > 25 and self.bmi <= 30:
             return('Świadczy o prawidłowej masie ciała. Oznacza to, że nie ma\
                 potrzeby zmiany stylu życia, czy odżywiania się.', 'nadwaga',
-                   'orange')
+                   'orange', 'not-ok')
         elif self.bmi > 30 and self.bmi <= 35:
             return('Wynik ten mówi o zwiększonym ryzyku wystąpienia chorób\
                 typowych dla otyłości.', 'otyłość I stopnia', 'red', 'not-ok')
