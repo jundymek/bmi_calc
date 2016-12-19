@@ -16,9 +16,10 @@
     {% endblock %}
     chart.draw(data, options);
     chart{{ chart.get_html_id }} = chart;
+
+    window.onresize = function(){
+      chart.draw(data, options);
+    };
   }
 
-  $(window).resize(function (){
-    drawChart{{ chart.get_html_id }}();
-  });
 </script>
