@@ -29,7 +29,6 @@ input, select, textarea{
   border: 1px solid #fff;
 }
 
-
 /*
  * Base structure
  */
@@ -47,16 +46,16 @@ body {
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
-  display: table;
+  display: block;
   width: 100%;
-  height: 100%; /* For at least Firefox */
-  min-height: 100%;
-  -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-          box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+  height: 50%; /* For at least Firefox */
+  min-height: 50%;
+
 }
 .site-wrapper-inner {
-  display: table-cell;
-  vertical-align: top;
+  display: block;
+  padding-top:150px;
+
 }
 .cover-container {
   margin-right: auto;
@@ -169,5 +168,11 @@ body {
   .mastfoot,
   .cover-container {
     width: 700px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-wrapper-inner {
+    padding-top:50px;
   }
 }

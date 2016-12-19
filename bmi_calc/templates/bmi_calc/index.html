@@ -1,68 +1,30 @@
-<head>
-  <meta charset="UTF-8">
-  <title>BMI calculator</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'bmi_calc/css/bootstrap.min.css' %}" type = "text/css"/>
-  <link rel="stylesheet" href="{% static 'bmi_calc/js/bootstrap.min.js' %}" type = "text/css"/>
-  <link rel="stylesheet" href="{% static 'bmi_calc/css/cover.css' %}" type = "text/css"/>
-</head>
-<body>
-  <div class="site-wrapper">
-    <div class="site-wrapper-inner">
-      <div class="cover-container">
-        <div class="masthead clearfix">
-          <div class="inner">
-            <h3 class="masthead-brand"><a href="{% url 'index' %}">Kalkulator BMI</a></h3>
-            <nav>
-              <ul class="nav masthead-nav">
-                <li class="active"><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'charts' %}">Wykresy</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-        {% if not bmi %}
-        <h1 class="cover-heading">Oblicz BMI</h1>
-        <div class="inner cover">
-        <form action="" class="navbar-form navbar-center" method="post" >
-          {% csrf_token %}
-          <div class="form-group">
-            <p><label for="height">Podaj wzrost:</label>
-                         <input id="height" type="number" name="height" min="10" max="300" required /></p>
-            <p><label for="weight">Podaj wagę:&nbsp&nbsp</label>
-                        <input id="weight" type="number" name="weight" min="10" max="300" required /></p>
-            {# {{form.as_p}} #}
-          </div>
-          <p class="lead" style="padding:10px 0 0 80px">
-            <button type="submit" class="btn btn-lg btn-default" >Zatwierdź</button>
-          </p>
-        </form> <br><br><br><br><br></div>
-        {% else %}
-        <div class="inner cover">
-          <h2 class="cover-heading">Twoje BMI wynosi: <span
-          style="font-size: 60px;
-          color: {{color}} ">{{bmi}}</span> czyli <br><span style="color: {{color}} ">{{message1}}</span></h2>
-          <img src="{% static "" %}bmi_calc/images/{{ok}}.jpg"
-          class="img-responsive center-block" width='200px' alt="Wynik BMI"><br>
-          <p class="lead">{{message}}</p>
-        </div>  
-        {% endif %}
-        <div class="mastfoot">
-          <div class="inner">
-            <p>Kalkulator BMI przy użyciu <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="">jundymek</a>.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% if not bmi %}
+<h1 class="cover-heading">Oblicz BMI</h1>
+<div class="inner cover">
+<form action="" class="navbar-form navbar-center" method="post" >
+  {% csrf_token %}
+  <div class="form-group">
+    <p><label for="height">Podaj wzrost w cm:</label>
+                 <input id="height" type="number" name="height" min="10" max="300" required /></p>
+    <p><label for="weight">Podaj wagę w kg:&nbsp&nbsp</label>
+                <input id="weight" type="number" name="weight" min="10" max="300" required /></p>
   </div>
-  <!-- Bootstrap core JavaScript
-  ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-  <script src="../../dist/js/bootstrap.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-</html>
+  <p class="lead" style="padding:10px 0 0 80px">
+    <button type="submit" class="btn btn-lg btn-default" >Zatwierdź</button>
+  </p>
+</form> <br><br><br><br><br></div>
+{% else %}
+<div class="inner cover">
+  <h2 class="cover-heading">Twoje BMI wynosi: <span
+  style="font-size: 60px;
+  color: {{color}} ">{{bmi}}</span> czyli <br><span style="color: {{color}} ">{{message1}}</span></h2>
+  <img src="{% static "" %}bmi_calc/images/{{ok}}.jpg"
+  class="img-responsive center-block" width='200px' alt="Wynik BMI"><br>
+  <p class="lead">{{message}}</p>
+</div>  
+{% endif %}  
+{% endblock content %}
+        

@@ -1,0 +1,46 @@
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}BMI calculator{% endblock title %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'bmi_calc/css/bootstrap.min.css' %}" type = "text/css"/>
+  <link rel="stylesheet" href="{% static 'bmi_calc/js/bootstrap.min.js' %}" type = "text/css"/>
+  <link rel="stylesheet" href="{% static 'bmi_calc/css/cover.css' %}" type = "text/css"/>
+  {% block head %}{% endblock head %}
+</head>
+<body>
+  <div class="site-wrapper">
+    <div class="site-wrapper-inner">
+      <div class="cover-container">
+        <div class="masthead clearfix">
+          <div class="inner">
+            <h3 class="masthead-brand"><a href="{% url 'index' %}">Kalkulator BMI</a></h3>
+            {% block nav %}
+            <nav>
+              <ul class="nav masthead-nav">
+                <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'charts' %}">Wykresy</a></li>
+              </ul>
+            </nav> 
+            {% endblock nav %}
+          </div>
+        </div>
+        {% block content %}
+        {% endblock content %}
+        <div class="mastfoot">
+          <div class="inner">
+            <p>Kalkulator BMI przy użyciu <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="">jundymek</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>

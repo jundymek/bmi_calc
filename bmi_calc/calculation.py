@@ -28,9 +28,10 @@ class BmiCalculator():
                 potrzeby zmiany stylu życia, czy odżywiania się.', 'waga\
                 prawidłowa', 'green', 'ok')
         elif self.bmi > 25 and self.bmi <= 30:
-            return('Świadczy o prawidłowej masie ciała. Oznacza to, że nie ma\
-                potrzeby zmiany stylu życia, czy odżywiania się.', 'nadwaga',
-                   'orange', 'not-ok')
+            return('Osoby, które uzyskały ten wynik nie muszą się jeszcze \
+                zanadto martwić, lecz powinny to potraktować jako sygnał \
+                ostrzegawczy, który sugeruje zmianę stylu życia, ograniczenie \
+                cukrów i tłuszczy.', 'nadwaga', 'orange', 'not-ok')
         elif self.bmi > 30 and self.bmi <= 35:
             return('Wynik ten mówi o zwiększonym ryzyku wystąpienia chorób\
                 typowych dla otyłości.', 'otyłość I stopnia', 'red', 'not-ok')
