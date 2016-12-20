@@ -1,3 +1,6 @@
+from ipware.ip import get_ip
+
+from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -11,6 +14,10 @@ from graphos.renderers.gchart import ColumnChart
 
 def index(request):
     form = BmiForm()
+    ip = get_ip(request)
+    print('Your ip adress is: ' + ip)
+    g = GeoIP2()
+    print(g.country(str(ip)))
     if request.method == 'POST':
         form = BmiForm(request.POST)
         if form.is_valid():
@@ -33,8 +40,9 @@ def index(request):
             return render(request, 'bmi_calc/index.html', {'form': form,
                                                            'bmi': int(round(bmi)), 'message': message[0],
                                                            'message1': message[1], 'color': message[2],
-                                                           'ok': message[3], })
-    return render(request, 'bmi_calc/index.html', {'form': form})
+                                                           'ok': message[3],
+                                                           'ip': ip})
+    return render(request, 'bmi_calc/index.html', {'form': form, 'ip': ip})
 
 
 def charts(request):
