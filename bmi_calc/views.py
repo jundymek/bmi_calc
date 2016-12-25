@@ -17,7 +17,7 @@ def index(request):
     ip = get_ip(request)
     print('Your ip adress is: ' + ip)
     g = GeoIP2()
-    print(g.country(str(ip)))
+    # print(g.country(str(ip)))
     if request.method == 'POST':
         form = BmiForm(request.POST)
         if form.is_valid():
@@ -75,3 +75,6 @@ def charts(request):
                                                         'gridlines': {'count': 15}}, 'title': "BMI"})
     context = {'chart': chart}
     return render(request, 'bmi_calc/charts.html', context)
+
+    def localization(request):
+        return render(reqest, 'localization/localization.html')
