@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Bmi, Localization
 
 
 class BmiCalculator():
@@ -45,3 +47,14 @@ class BmiCalculator():
                 dietą i lekami. W przypadkach, kiedy to nie wystarczy potrzebna\
                 jest operacja chirurgiczna.', 'otyłość III stopnia', 'red',
                    'not-ok')
+
+    def database(self):
+        if self.bmi > 40:
+            self.bmi = 40
+        try:
+            bmi_object = Bmi.objects.get(bmi=int(round(self.bmi)))
+            bmi_object.counter = int(bmi_object.counter) + 1
+            bmi_object.save()
+        except ObjectDoesNotExist:
+            bmi_object = Bmi(bmi=int(round(self.bmi)))
+            bmi_object.save()

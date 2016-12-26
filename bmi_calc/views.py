@@ -4,7 +4,7 @@ from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Bmi
+from .models import Bmi, Localization
 from .forms import BmiForm
 from .calculation import BmiCalculator
 
@@ -29,13 +29,20 @@ def index(request):
             print(int(round(bmi)))
             message = wynik.bmi_message()
             # bmi = weight / ((height / 100)**2)
-            try:
-                bmi_object = Bmi.objects.get(bmi=int(round(bmi)))
-                bmi_object.counter = int(bmi_object.counter) + 1
-                bmi_object.save()
-            except ObjectDoesNotExist:
-                bmi_object = Bmi(bmi=int(round(bmi)))
-                bmi_object.save()
+
+            # wczytanie danych do bazy
+            wynik.database()
+            # try:
+            #     bmi_object = Bmi.objects.get(bmi=int(round(bmi)))
+            #     bmi_object.counter = int(bmi_object.counter) + 1
+            #     bmi_object.save()
+            # except ObjectDoesNotExist:
+            #     bmi_object = Bmi(bmi=int(round(bmi)))
+            #     bmi_object.save()
+
+            # localization_object = Localization(bmi=int(round(bmi)))
+            # localization_object.ip = ip
+            # localization_object.save()
 
             return render(request, 'bmi_calc/index.html', {'form': form,
                                                            'bmi': int(round(bmi)), 'message': message[0],
@@ -56,6 +63,7 @@ def charts(request):
                 data_bmi.append(40)
             else:
                 data_bmi.append(float(i))
+    print(data_bmi)
     for object in Bmi.objects.values_list('counter'):
         for i in object:
             data_licznik.append(float(i))
@@ -76,5 +84,5 @@ def charts(request):
     context = {'chart': chart}
     return render(request, 'bmi_calc/charts.html', context)
 
-    def localization(request):
-        return render(reqest, 'localization/localization.html')
+def localization(request):
+    return render(request, 'bmi_calc/localization.html')

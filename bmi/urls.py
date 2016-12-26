@@ -19,5 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('bmi_calc.urls')),
-    url(r'^localization/', include('localization.urls')),
+    # url(r'^localization/', include('localization.urls')),
 ]
