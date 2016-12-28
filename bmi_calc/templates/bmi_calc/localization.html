@@ -1,1 +1,35 @@
-AAAAAAA
+{% extends "base.html" %}
+{% block title %}BMI - miasta{% endblock title %}
+{% block head %}
+{% endblock head %}
+{% block nav %}
+<nav>
+  <ul class="nav masthead-nav">
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="{% url 'charts' %}">Wykresy</a></li>
+    <li class="active"><a href="{% url 'localization' %}">Localization</a></li>
+  </ul>
+</nav>  
+{% endblock nav %}
+{% block content %}
+    <h2>Popularne miasta</h2>
+    <p>BMI w rozbiciu na miejsce zamieszkania użytkowników serwisu</p>
+    <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Bmi</th>
+        <th>Miasto</th>
+        <th>Liczba wystąpień</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}  
+      <tr>
+        <td>{{i.bmi}}</td>
+        <td>{{i.city}}</td>
+        <td style="width: 20%">{{i.city_counter}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

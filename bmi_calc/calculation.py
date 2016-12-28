@@ -1,4 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.gis.geoip2 import GeoIP2
+
 from .models import Bmi, Localization
 
 
@@ -58,3 +60,36 @@ class BmiCalculator():
         except ObjectDoesNotExist:
             bmi_object = Bmi(bmi=int(round(self.bmi)))
             bmi_object.save()
+
+
+class BmiLocalization():
+
+    def __init__(self, ip, bmi):
+        self.ip = ip
+        self.bmi = bmi
+        self.city = 'Inne'
+
+    def city_localization(self):
+        g = GeoIP2()
+        try:
+            if g.city(str(self.ip))['city']:
+                self.city = g.city(str(self.ip))['city']
+            else:
+                self.city = 'Inne miasto'
+        except:
+            self.city = 'Inne miasto'
+        return(self.city)
+
+    def city_database(self):
+        if self.bmi > 40:
+            self.bmi = 40
+        print(self.city)
+        try:
+            city_object = Localization.objects.get(bmi=int(round(self.bmi)),
+                                                   city=self.city)
+            city_object.city_counter = int(city_object.city_counter) + 1
+            city_object.save()
+        except ObjectDoesNotExist:
+            city_object = Localization(bmi=int(round(self.bmi)))
+            city_object.city = self.city
+            city_object.save()

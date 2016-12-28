@@ -8,4 +8,5 @@ class Bmi(models.Model):
 
 class Localization(models.Model):
     bmi = models.FloatField()
-    ip = models.CharField(max_length=40)
+    city = models.CharField(max_length=40)
+    city_counter = models.IntegerField(default=1)

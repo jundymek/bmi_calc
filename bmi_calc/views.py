@@ -1,12 +1,10 @@
 from ipware.ip import get_ip
 
-from django.contrib.gis.geoip2 import GeoIP2
 from django.shortcuts import render
-from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Bmi, Localization
 from .forms import BmiForm
-from .calculation import BmiCalculator
+from .calculation import BmiCalculator, BmiLocalization
 
 from graphos.sources.simple import SimpleDataSource
 from graphos.renderers.gchart import ColumnChart
@@ -15,9 +13,6 @@ from graphos.renderers.gchart import ColumnChart
 def index(request):
     form = BmiForm()
     ip = get_ip(request)
-    print('Your ip adress is: ' + ip)
-    g = GeoIP2()
-    # print(g.country(str(ip)))
     if request.method == 'POST':
         form = BmiForm(request.POST)
         if form.is_valid():
@@ -28,21 +23,11 @@ def index(request):
             print(bmi)
             print(int(round(bmi)))
             message = wynik.bmi_message()
-            # bmi = weight / ((height / 100)**2)
-
             # wczytanie danych do bazy
             wynik.database()
-            # try:
-            #     bmi_object = Bmi.objects.get(bmi=int(round(bmi)))
-            #     bmi_object.counter = int(bmi_object.counter) + 1
-            #     bmi_object.save()
-            # except ObjectDoesNotExist:
-            #     bmi_object = Bmi(bmi=int(round(bmi)))
-            #     bmi_object.save()
-
-            # localization_object = Localization(bmi=int(round(bmi)))
-            # localization_object.ip = ip
-            # localization_object.save()
+            loc = BmiLocalization(ip, bmi)
+            loc.city_localization()
+            loc.city_database()
 
             return render(request, 'bmi_calc/index.html', {'form': form,
                                                            'bmi': int(round(bmi)), 'message': message[0],
@@ -84,5 +69,8 @@ def charts(request):
     context = {'chart': chart}
     return render(request, 'bmi_calc/charts.html', context)
 
+
 def localization(request):
-    return render(request, 'bmi_calc/localization.html')
+    data = Localization.objects.order_by('-city_counter')[:10]
+    context = {'data': data}
+    return render(request, 'bmi_calc/localization.html', context)
